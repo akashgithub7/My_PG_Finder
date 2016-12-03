@@ -40,10 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="normal|bold|italic" />
+        android:textStyle="normal|bold|italic"
+        android:maxLength="10"/>
 
     <TextView
         android:id="@+id/tvEmail"
@@ -56,20 +57,19 @@
 
 
     <EditText
-        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/white"
+        android:ems="10"
+        android:id="@+id/editText"
         android:textSize="18sp"
-        android:textStyle="normal|bold|italic" />
+        android:textStyle="normal|bold|italic"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/tvPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
         android:text="Enter Your Password :"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
@@ -83,7 +83,8 @@
         android:inputType="textPassword"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="normal|bold|italic" />
+        android:textStyle="normal|bold|italic"
+        />
 
     <Button
         android:id="@+id/btnRegister"

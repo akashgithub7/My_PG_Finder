@@ -17,15 +17,14 @@
 
 
     <EditText
-        android:id="@+id/etUseEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/white"
+        android:ems="10"
+        android:id="@+id/editText"
         android:textSize="18sp"
         android:textStyle="normal|bold|italic"
-        android:textAlignment="center" />
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/tvUserPassword"
