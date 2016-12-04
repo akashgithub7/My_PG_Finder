@@ -48,12 +48,14 @@ public class User_Register_Form extends Fragment {
                 }else  if(etPassword.getText().toString().equals("")){
                     etPassword.setError("error");
                 }else {
+                    String email = etEmail.getText().toString().trim();
+                    mail=new SendMail(thisContext,email,"Welcome","Welcome To My App ");
+                    //Executing sendmail to send email
+                    mail.execute();
                     etName.setText("");
                     etNumber.setText("");
                     etEmail.setText("");
                     etPassword.setText("");
-                    mail=new SendMail(thisContext,etEmail.getText().toString(),"Welcome","Welcome To My App ");
-                    Toast.makeText(thisContext,"sending",Toast.LENGTH_SHORT).show();
                 }
             }
         });
