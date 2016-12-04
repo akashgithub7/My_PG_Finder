@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.mymindakash.my_pg_finder.adapter.DataTables;
 import com.mymindakash.my_pg_finder.fragments.User_Login_Form;
 import com.mymindakash.my_pg_finder.fragments.User_Register_Form;
 
@@ -20,6 +21,7 @@ public class User_Info_Page extends AppCompatActivity implements ActionBar.TabLi
     private ViewPager viewPager;
     private UserAdapter userAdapter;
     private ActionBar actionBar;
+    private DataTables sql;
 
     // Tab titles
     private String[] tabs = {"Register", "Login"};
@@ -28,7 +30,7 @@ public class User_Info_Page extends AppCompatActivity implements ActionBar.TabLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user__info__page);
-
+        sql=new DataTables(this);
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getSupportActionBar();
         userAdapter = new UserAdapter(getSupportFragmentManager());

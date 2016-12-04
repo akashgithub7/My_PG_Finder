@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.mymindakash.my_pg_finder.R;
+import com.mymindakash.my_pg_finder.adapter.DataTables;
 import com.mymindakash.my_pg_finder.mailsend.SendMail;
 
 
@@ -21,11 +21,12 @@ import com.mymindakash.my_pg_finder.mailsend.SendMail;
  */
 
 public class User_Register_Form extends Fragment {
-
     private EditText etName,etNumber,etPassword,etEmail;
     private Button btnRegister;
     Context thisContext;
     SendMail mail;
+    DataTables sql;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class User_Register_Form extends Fragment {
         etPassword= (EditText) view.findViewById(R.id.etPassword);
         btnRegister= (Button) view.findViewById(R.id.btnRegister);
         thisContext=container.getContext();
+        sql=new DataTables(thisContext);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,14 +54,26 @@ public class User_Register_Form extends Fragment {
                     mail=new SendMail(thisContext,email,"Welcome","Welcome To My App ");
                     //Executing sendmail to send email
                     mail.execute();
-                    etName.setText("");
-                    etNumber.setText("");
-                    etEmail.setText("");
-                    etPassword.setText("");
+                    insertData();
+
                 }
             }
         });
         return view;
+    }
+    public void insertData(){
+        String name=etName.getText().toString();
+        String number=etNumber.getText().toString();
+        String email=etEmail.getText().toString();
+        String password=etPassword.getText().toString();
+        sql.insertData(name,number,email,password);
+       doClear();
+    }
+    public void doClear(){
+        etName.getText().clear();
+        etNumber.getText().clear();
+        etEmail.getText().clear();
+        etPassword.getText().clear();
     }
 
 }
