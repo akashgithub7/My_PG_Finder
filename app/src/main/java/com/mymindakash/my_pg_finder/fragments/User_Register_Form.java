@@ -67,6 +67,8 @@ public class User_Register_Form extends Fragment {
         String email=etEmail.getText().toString();
         String password=etPassword.getText().toString();
         sql.insertData(name,number,email,password);
+        String data=sql.showAllData();
+        Toast.makeText(thisContext,data,Toast.LENGTH_SHORT).show();
        doClear();
     }
     public void doClear(){

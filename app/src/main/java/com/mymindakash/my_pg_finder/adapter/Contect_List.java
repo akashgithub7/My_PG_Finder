@@ -7,14 +7,15 @@ package com.mymindakash.my_pg_finder.adapter;
 public class Contect_List {
     private int id;
     private String name;
-    private String password;
-    private int number;
+    private String number;
     private String email;
+    private String password;
+
 
     public Contect_List() {
     }
 
-    public Contect_List(int id, String name, String password, int number, String email) {
+    public Contect_List(int id, String name, String password, String number, String email) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -38,19 +39,11 @@ public class Contect_List {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -60,5 +53,13 @@ public class Contect_List {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
