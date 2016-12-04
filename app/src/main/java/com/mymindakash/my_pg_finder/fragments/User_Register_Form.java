@@ -1,6 +1,6 @@
 package com.mymindakash.my_pg_finder.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.mymindakash.my_pg_finder.R;
+import com.mymindakash.my_pg_finder.mailsend.SendMail;
 
 
 /**
@@ -22,7 +24,8 @@ public class User_Register_Form extends Fragment {
 
     private EditText etName,etNumber,etPassword,etEmail;
     private Button btnRegister;
-
+    Context thisContext;
+    SendMail mail;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class User_Register_Form extends Fragment {
         etEmail= (EditText) view.findViewById(R.id.etEmail);
         etPassword= (EditText) view.findViewById(R.id.etPassword);
         btnRegister= (Button) view.findViewById(R.id.btnRegister);
+        thisContext=container.getContext();
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +52,8 @@ public class User_Register_Form extends Fragment {
                     etNumber.setText("");
                     etEmail.setText("");
                     etPassword.setText("");
-
+                    mail=new SendMail(thisContext,etEmail.getText().toString(),"Welcome","Welcome To My App ");
+                    Toast.makeText(thisContext,"sending",Toast.LENGTH_SHORT).show();
                 }
             }
         });
