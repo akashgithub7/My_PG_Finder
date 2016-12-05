@@ -137,24 +137,7 @@ public class RobotoTextView extends TextView {
     }
 
     public static class Roboto {
-        /* From attrs.xml file:
-        <enum name="robotoBlack" value="0" />
-        <enum name="robotoBlackItalic" value="1" />
-        <enum name="robotoBold" value="2" />
-        <enum name="robotoBoldItalic" value="3" />
-        <enum name="robotoBoldCondensed" value="4" />
-        <enum name="robotoBoldCondensedItalic" value="5" />
-        <enum name="robotoCondensed" value="6" />
-        <enum name="robotoCondensedItalic" value="7" />
-        <enum name="robotoItalic" value="8" />
-        <enum name="robotoLight" value="9" />
-        <enum name="robotoLightItalic" value="10" />
-        <enum name="robotoMedium" value="11" />
-        <enum name="robotoMediumItalic" value="12" />
-        <enum name="robotoRegular" value="13" />
-        <enum name="robotoThin" value="14" />
-        <enum name="robotoThinItalic" value="15" />
-        */
+
         public static final int ROBOTO_BLACK = 0;
         public static final int ROBOTO_BLACK_ITALIC = 1;
         public static final int ROBOTO_BOLD = 2;

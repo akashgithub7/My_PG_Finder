@@ -13,51 +13,28 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * {@link ImageView} extension that animates its image with the
- * <a href="http://en.wikipedia.org/wiki/Ken_Burns_effect">Ken Burns Effect</a>.
- * @author Flavio Faria
- * @see Transition
- * @see TransitionGenerator
- */
+
 public class KenBurnsView extends ImageView {
 
-    /** Delay between a pair of frames at a 60 FPS frame rate. */
     private static final long FRAME_DELAY = 1000 / 60;
 
-    /** Matrix used to perform all the necessary transition transformations. */
     private final Matrix mMatrix = new Matrix();
 
-    /** The {@link TransitionGenerator} implementation used to perform the transitions between
-     * rects. The default {@link TransitionGenerator} is {@link RandomTransitionGenerator}. */
     private TransitionGenerator mTransGen = (TransitionGenerator) new RandomTransitionGenerator();
 
-    /** A {@link TransitionListener} to be notified when
-     * a transition starts or ends. */
     private TransitionListener mTransitionListener;
 
-    /** The ongoing transition. */
     private Transition mCurrentTrans;
 
-    /** The rect that holds the bounds of this view. */
     private final RectF mViewportRect = new RectF();
-    /** The rect that holds the bounds of the current {@link Drawable}. */
     private RectF mDrawableRect;
 
-    /** The progress of the animation, in milliseconds. */
     private long mElapsedTime;
 
-    /** The time, in milliseconds, of the last animation frame.
-     * This is useful to increment {@link #mElapsedTime} regardless
-     * of the amount of time the animation has been paused. */
     private long mLastFrameTime;
 
-    /** Controls whether the the animation is running. */
     private boolean mPaused;
 
-    /** Indicates whether the parent constructor was already called.
-     * This is needed to distinguish if the image is being set before
-     * or after the super class constructor returns. */
     private boolean mInitialized;
 
 
@@ -74,22 +51,19 @@ public class KenBurnsView extends ImageView {
     public KenBurnsView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mInitialized = true;
-// Attention to the super call here!
         super.setScaleType(ScaleType.MATRIX);
     }
 
 
     @Override
     public void setScaleType(ScaleType scaleType) {
-// It'll always be center-cropped by default.
     }
 
 
     @Override
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
-/* When not visible, onDraw() doesn't get called,
-but the time elapses anyway. */
+
         switch (visibility) {
             case VISIBLE:
                 resume();
@@ -153,18 +127,13 @@ but the time elapses anyway. */
 
                     float widthScale = mDrawableRect.width() / currentRect.width();
                     float heightScale = mDrawableRect.height() / currentRect.height();
-// Scale to make the current rect match the smallest drawable dimension.
                     float currRectToDrwScale = Math.min(widthScale, heightScale);
-// Scale to make the current rect match the viewport bounds.
                     float currRectToVpScale = mViewportRect.width() / currentRect.width();
-// Combines the two scales to fill the viewport with the current rect.
                     float totalScale = currRectToDrwScale * currRectToVpScale;
 
                     float translX = totalScale * (mDrawableRect.centerX() - currentRect.left);
                     float translY = totalScale * (mDrawableRect.centerY() - currentRect.top);
 
-/* Performs matrix transformations to fit the content
-of the current rect into the entire view. */
                     mMatrix.reset();
                     mMatrix.postTranslate(-mDrawableRect.width() / 2, -mDrawableRect.height() / 2);
                     mMatrix.postScale(totalScale, totalScale);
@@ -172,12 +141,11 @@ of the current rect into the entire view. */
 
                     setImageMatrix(mMatrix);
 
-// Current transition is over. It's time to start a new one.
                     if (mElapsedTime >= mCurrentTrans.getDuration()) {
                         fireTransitionEnd(mCurrentTrans);
                         startNewTransition();
                     }
-                } else { // Stopping? A stop event has to be fired.
+                } else {
                     fireTransitionEnd(mCurrentTrans);
                 }
             }
@@ -188,9 +156,7 @@ of the current rect into the entire view. */
     }
 
 
-    /**
-     * Generates and starts a transition.
-     */
+
     private void startNewTransition() {
         if (!hasBounds()) {
             throw new UnsupportedOperationException("Can't start transition if the " +
@@ -203,9 +169,6 @@ of the current rect into the entire view. */
     }
 
 
-    /**
-     * Creates a new transition and starts over.
-     */
     public void restart() {
         int width = getWidth();
         int height = getHeight();
@@ -222,31 +185,16 @@ of the current rect into the entire view. */
         }
     }
 
-
-    /**
-     * Checks whether this view has bounds.
-     * @return
-     */
     private boolean hasBounds() {
         return !mViewportRect.isEmpty();
     }
 
-
-    /**
-     * Fires a start event on {@link #mTransitionListener};
-     * @param transition the transition that just started.
-     */
     private void fireTransitionStart(Transition transition) {
         if (mTransitionListener != null && transition != null) {
             mTransitionListener.onTransitionStart(transition);
         }
     }
 
-
-    /**
-     * Fires an end event on {@link #mTransitionListener};
-     * @param transition the transition that just ended.
-     */
     private void fireTransitionEnd(Transition transition) {
         if (mTransitionListener != null && transition != null) {
             mTransitionListener.onTransitionEnd(transition);
@@ -254,10 +202,6 @@ of the current rect into the entire view. */
     }
 
 
-    /**
-     * Sets the {@link TransitionGenerator} to be used in animations.
-     * @param transgen the {@link TransitionGenerator} to be used in animations.
-     */
     public void setTransitionGenerator(TransitionGenerator transgen) {
         mTransGen = transgen;
         if (hasBounds()) {
@@ -265,21 +209,10 @@ of the current rect into the entire view. */
         }
     }
 
-
-    /**
-     * Updates the viewport rect. This must be called every time the size of this view changes.
-     * @param width the new viewport with.
-     * @param height the new viewport height.
-     */
     private void updateViewport(float width, float height) {
         mViewportRect.set(0, 0, width, height);
     }
 
-
-    /**
-     * Updates the drawable bounds rect. This must be called every time the drawable
-     * associated to this view changes.
-     */
     private void updateDrawableBounds() {
         if (mDrawableRect == null) {
             mDrawableRect = new RectF();
@@ -291,16 +224,8 @@ of the current rect into the entire view. */
     }
 
 
-    /**
-     * This method is called every time the underlying image
-     * is changed.
-     */
     private void handleImageChange() {
         updateDrawableBounds();
-/* Don't start a new transition if this event
-was fired during the super constructor execution.
-The view won't be ready at this time. Also,
-don't start it if this view size is still unknown. */
         if (mInitialized && hasBounds()) {
             startNewTransition();
         }
@@ -311,40 +236,19 @@ don't start it if this view size is still unknown. */
         mTransitionListener = transitionListener;
     }
 
-
-    /**
-     * Pauses the Ken Burns Effect animation.
-     */
     public void pause() {
         mPaused = true;
     }
 
-
-    /**
-     * Resumes the Ken Burns Effect animation.
-     */
     public void resume() {
         mPaused = false;
-// This will make the animation to continue from where it stopped.
         mLastFrameTime = System.currentTimeMillis();
         invalidate();
     }
 
 
-    /**
-     * A transition listener receives notifications when a transition starts or ends.
-     */
     public interface TransitionListener {
-        /**
-         * Notifies the start of a transition.
-         * @param transition the transition that just started.
-         */
         public void onTransitionStart(Transition transition);
-
-        /**
-         * Notifies the end of a transition.
-         * @param transition the transition that just ended.
-         */
         public void onTransitionEnd(Transition transition);
     }
 }
