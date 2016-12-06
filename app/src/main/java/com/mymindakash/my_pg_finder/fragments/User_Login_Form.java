@@ -25,11 +25,11 @@ import java.util.List;
  */
 
 public class User_Login_Form extends Fragment {
-    private EditText etLoginEmail, getEtLoginPassword;
+    private EditText etLoginEmail, etLoginPassword;
     private Button btnLogin;
     private List<Contect_List> list;
-    private String email;
-    private String password;
+    private String email, Email;
+    private String password, Password;
     Context thisContext;
     DataTables sql;
 
@@ -43,20 +43,21 @@ public class User_Login_Form extends Fragment {
         View view = inflater.inflate(R.layout.user_login_form, container, false);
         thisContext = container.getContext();
         etLoginEmail = (EditText) view.findViewById(R.id.etLoginEmail);
-        getEtLoginPassword = (EditText) view.findViewById(R.id.etLoginPassword);
+        etLoginPassword = (EditText) view.findViewById(R.id.etLoginPassword);
         btnLogin = (Button) view.findViewById(R.id.btnLogin);
         sql = new DataTables(thisContext);
         list = new ArrayList<>();
-
+        Email = etLoginEmail.getText().toString();
+        Password = etLoginPassword.getText().toString();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (etLoginEmail.getText().toString().equals("")) {
                     etLoginEmail.setError("error");
-                } else if (getEtLoginPassword.getText().toString().equals("")) {
-                    getEtLoginPassword.setError("error");
+                } else if (etLoginPassword.getText().toString().equals("")) {
+                    etLoginPassword.setError("error");
                 } else {
-                    Cursor cursor = sql.Login(etLoginEmail.getText().toString());
+                    Cursor cursor = sql.Login(etLoginEmail.getText().toString(), etLoginPassword.getText().toString());
                     while (cursor.moveToNext()) {
                         email = cursor.getString(3);
                         password = cursor.getString(4);
@@ -64,20 +65,33 @@ public class User_Login_Form extends Fragment {
                     }
                     try {
 
-                        if (email.equals(etLoginEmail.getText().toString())) {
-                            Toast.makeText(thisContext, "" + email + " " + password, Toast.LENGTH_SHORT).show();
+                        if (email.equals(etLoginEmail.getText().toString()) && password.equals(etLoginPassword.getText().toString())) {
 
-                        } else {
-                            Toast.makeText(thisContext, "plz register", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(thisContext, "" + email + " " + password, Toast.LENGTH_SHORT).show();
+                            doClear();
+                            }
+                        else if(email.equals(etLoginEmail.getText().toString()) && !password.equals(etLoginPassword.getText().toString())) {
+                                Toast.makeText(thisContext, "Plz Enter Valid Password", Toast.LENGTH_SHORT).show();
+                            }
+                        else if(!email.equals(etLoginEmail.getText().toString()) && password.equals(etLoginPassword.getText().toString())) {
+                            Toast.makeText(thisContext, "Plz Enter Valid Email", Toast.LENGTH_SHORT).show();
+                        }
+                         else {
+                            doClear();
+                            Toast.makeText(thisContext, "Plz Register First", Toast.LENGTH_SHORT).show();
                         }
                     } catch (NullPointerException e) {
-                        Toast.makeText(thisContext, "plz register", Toast.LENGTH_SHORT).show();
+                        doClear();
+                        Toast.makeText(thisContext, "Plz Register First", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
         return view;
     }
-
+    public void doClear(){
+        etLoginEmail.setText("");
+        etLoginPassword.setText("");
+    }
 
 }

@@ -85,9 +85,9 @@ public class DataTables {
         db.update(Sqlite_Connection.TABLE_NAME, newValue, Sqlite_Connection.UID + " =  ?", new String[]{String.valueOf(id)});
         db.close();
     }
-    public  Cursor  Login(String email){
+    public  Cursor  Login(String email,String password){
         SQLiteDatabase db = sql.getWritableDatabase();
-        String query="select * from "+Sqlite_Connection.TABLE_NAME+ " where EMAIL = '"+email+"'";
+        String query="select * from "+Sqlite_Connection.TABLE_NAME+ " where EMAIL = '"+email+"' and PASSWORD = '"+password+"' ";
         Cursor cursor=db.rawQuery(query,null);
         return cursor;
     }
