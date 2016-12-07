@@ -14,17 +14,19 @@
             android:label="OwnerPage"/>
 
         <activity android:name=".MainActivity">
-
         </activity>
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".User_Info_Page">
 
+        <activity android:name=".User_Info_Page" />
+
+        <activity android:name=".Search_Activity"
+            android:label="Search">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
