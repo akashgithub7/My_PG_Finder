@@ -18,8 +18,8 @@
 
         <activity android:name=".User_Info_Page" />
 
-        <activity android:name=".Search_Activity"
-            android:label="Search">
+        <activity android:name=".Owner_Details_Page2_Activity"
+            android:label="Owner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
